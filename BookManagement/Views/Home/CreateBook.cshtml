@@ -1,0 +1,389 @@
+﻿@using BookManagement.Models;
+@model BookDetails;
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<!-- jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- jQuery UI library -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+
+
+<!-- jQuery UI CSS -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<style>
+
+   /*  body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+    } */
+
+    body {
+        background-image: url('/image/BookImage.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    h1 {
+        color: #333;
+    }
+
+    form {
+        max-width: 872px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    div[name="RegForm"] {
+        width: 80%;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+    }
+
+    input[type="submit"],
+    input[type="reset"],
+    input.btn-primary {
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 5px 0;
+    }
+
+        input[type="submit"]:hover,
+        input[type="reset"]:hover,
+        inpuauthortn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    input[type="text"],
+    select,
+    textarea {
+        width: 100%;
+        max-width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    input[type="submit"],
+    input[type="reset"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+        input[type="submit"]:hover,
+        input[type="reset"]:hover,
+        input[type="checkbox"]:hover {
+            background-color: #0056b3;
+        }
+
+    .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    label {
+        display: block;
+        margin: 10px 0 5px 0;
+        font-weight: bold;
+    }
+
+    .red {
+        color: #f00;
+    }
+
+    .error-message {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+        display: block;
+    }
+
+</style>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+    <h1 style="color:white">Book Details</h1>
+    <div name="RegForm">
+        <p>
+            <label for="Title"><span class="red">*</span>Title:</label>
+            @Html.TextBoxFor(model => model.Title, new { @id = "Title", @maxlength = "200", @placeholder = "Enter the Title", @required = "required" })
+            <span id="Title-error" class="error-message"></span>
+        </p>
+        <p>
+            <label for="Author"><span class="red">*</span>Author</label>
+            @Html.TextBoxFor(model => model.Author, new { @id = "Author",  @placeholder = "Enter Author Name" })
+            <span id="author-error" class="error-message"></span>
+        </p>
+
+        <p>
+            <label for="Genre"><span class="red">*</span>Genre:</label>
+            @Html.TextBoxFor(model => model.Genre, new { @id = "Genre",  @placeholder = "Enter Genre" })
+            <span id="Genre-error" class="error-message"></span>
+        </p>
+
+        <p>
+            <label for="year">Published Year:</label>
+            <select id="year" name="year"></select>
+
+        </p>
+        <p>
+            <label for="Price"><span class="red">*</span>Price:</label>
+            @Html.TextBoxFor(model => model.Price, new { @id = "Price",  @placeholder = "Enter Price" })
+            <span id="Price-error" class="error-message"></span>
+        </p>
+        <p>
+            <label for="Discount">Discount Percentage:</label>
+            @Html.TextBoxFor(model => model.Discount, new { @id = "Discount",  @placeholder = "Enter your Discount" })
+            <span id="Discount-error" class="error-message"></span>
+        </p>
+        <p>
+            <label for="FinalPrice"><span class="red">*</span>Final Price:</label>
+            @Html.TextBoxFor(model => model.FinalPrice, new { @id = "FinalPrice", @placeholder = "Enter your final price" })
+            <span id="FinalPrice-error" class="error-message"></span>
+        </p>
+        <p>
+            <label for="Ratings">Ratings:</label>
+            @Html.DropDownListFor(m => m.Ratings, new List<SelectListItem>
+            {
+            new SelectListItem{ Text = "Select", Value = "" },
+            new SelectListItem{ Text = "1", Value = "1" },
+            new SelectListItem{ Text = "2", Value = "2" },
+            new SelectListItem{ Text = "3", Value = "3" },
+            new SelectListItem{ Text = "4", Value = "4" },
+            new SelectListItem{ Text = "5", Value = "5" }
+            })
+            <span id="Ratings-error" class="error-message"></span>
+
+        </p>
+       
+        
+        <div>
+            <input type="button" class="btn-primary" value="Back" style="margin-right: 10px;" onclick="Back()" />
+            <input type="button" class="btn-primary" value="Save" name="Submit" id="submit" onclick="CreateBook()" />
+            <i id="Loader" style="display:none;" class="fa fa-spin fa-spinner fa-1x taC"></i>
+        </div>
+        @Html.HiddenFor(m => m.BookId, new { id = "BookId" })
+    </div>
+</body>
+
+</html>
+<script type="text/javascript" lang="javascript">
+
+    function validateForm() {
+        var title = $("#Title").val();
+        var author = $("#Author").val();
+        var genre = $("#Genre").val();
+        var finalPrice = $("#FinalPrice").val();
+        var price = $("#Price").val();
+        var isValid = true;
+
+        // Clear previous error messages
+        $("#Title-error").text("");
+        $("#Author-error").text("");
+        $("#Genre-error").text("");
+        $("#FinalPrice-error").text("");
+
+        // Validate Title
+        if (title === "") {
+            $("#Title-error").text("Title Name is required.");
+            isValid = false;
+        } 
+
+        // Validate Author
+        if (author === "") {
+            $("#Author-error").text("Author Name is required.");
+            isValid = false;
+        }
+        // Validate Genre
+        if (genre === "") {
+            $("#Genre-error").text("Genre is required.");
+            isValid = false;
+        }
+        // Validate FinalPrice
+        if (finalPrice === "") {
+            $("#FinalPrice-error").text("Final Price is required.");
+            isValid = false;
+        }
+        else if (finalPrice === "0") {
+            $("#FinalPrice-error").text("Final Price is not equal to 0.");
+            isValid = false;
+        }
+        // Validate Price
+        if (price === "") {
+            $("#FinalPrice-error").text("Price is required.");
+            isValid = false;
+        }
+        else if (price === "0") {
+            $("#Price-error").text("Price is not equal to 0.");
+            isValid = false;
+        }
+
+        if(parseFloat(price) < finalPrice)
+        {
+            $("#FinalPrice-error").text("Final Price is not greater than price.");
+            isValid = false;
+        }
+
+        return isValid;
+    }
+    function CreateBook() {
+        $("#Loader").show();
+        if (!validateForm()) {
+            return;
+        }
+        var title = $('#Title').val();
+        var author = $('#Author').val();
+        var genre = $('#Genre').val();
+        var publishedYear = $('#year').val();
+        var price = $('#Price').val();
+        var discount = $('#Discount').val();
+        var finalPrice = $('#FinalPrice').val();
+        var ratings = $('#Ratings').val();
+        var bookId = $('#BookId').val();
+
+        var formData = new FormData();
+        formData.append('Title', title);
+        formData.append('Author', author);
+        formData.append('BookId', bookId);
+        formData.append('Genre', genre);
+        formData.append('Discount', discount);
+        formData.append('FinalPrice', finalPrice);
+        formData.append('Ratings', ratings);
+        formData.append('Price', price);
+        formData.append('PublishedYear', publishedYear);
+
+        $.ajax({
+            url: '/Home/CreateBook',
+            data: formData,
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            cache: false,
+            async: false,
+            success: function (data) {
+                if (data == true) {
+                    toastr.success("Successfully Created!");
+                    top.location.href = '/home/BookList';
+                } else {
+                    $("#Loader").hide();
+                    toastr.error("Some Error Occurred!");
+                }
+            },
+            error: function (xhr, status, error) {
+                toastr.error("Some Error Occurred!");
+                console.error("AJAX error:", status, error); // Log AJAX errors if any
+            }
+        });
+    }
+
+    function Back() {
+        top.location.href = '/Home/BookList'
+    }
+
+    const currentYear = new Date().getFullYear();
+    const startYear = 1980; // Define the start year
+    const endYear = currentYear; // Define the end year
+
+    // Reference the dropdown element
+    const yearDropdown = document.getElementById('year');
+
+    // Generate options dynamically
+    for (let year = startYear; year <= endYear; year++) {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+
+        // Set the current year as selected
+        if (year === currentYear) {
+            option.selected = true;
+        }
+
+        yearDropdown.appendChild(option);
+    }
+
+
+    const originalPrice = document.getElementById('Price');
+
+    // Add the onchange event listener dynamically
+    originalPrice.onchange = function () {
+        var price = parseFloat($("#Price").val());
+        $("#FinalPrice").val(price.toFixed(2));
+    };
+
+    const discount = document.getElementById('Discount');
+
+    // Add the onchange event listener dynamically
+    discount.onchange = function () {
+        var amount = 0;
+
+        // Get the original price and discount percentage
+        var originalPrice = parseFloat($("#Price").val());
+        var discountPercentage = parseFloat($("#Discount").val());
+
+        // Ensure values are valid numbers
+        if (!isNaN(originalPrice) && !isNaN(discountPercentage)) {
+            // Calculate the discounted price
+            amount = originalPrice * (1 - (discountPercentage / 100));
+            // Set the final price in the input field
+            $("#FinalPrice").val(amount.toFixed(2)); // Round to 2 decimal places
+        }
+        else {
+            $("#FinalPrice").val("");
+        }
+    };
+</script>
